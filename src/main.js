@@ -1,11 +1,15 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
 
-import 'bootstrap/dist/css/bootstrap.css'
-import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.js'
+// Bootstrap
+import "bootstrap/dist/css/bootstrap.css";
+import bootstrap from "bootstrap/dist/js/bootstrap.bundle.js";
 
-const app = createApp(App)
+//Vuex
+import store from "./store/index.js";
 
-app.use(bootstrap)
+const app = createApp(App);
 
-app.mount('#app')
+app.use(store);
+app.use(bootstrap);
+app.mount("#app");
