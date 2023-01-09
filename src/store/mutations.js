@@ -1,5 +1,1 @@
-export default {
-  increment(state) {
-    state.number++;
-  },
-};
+export default {};

@@ -1,8 +1,6 @@
 <template>
   <TheHeader />
   <CheckoutForm />
-  <button @click="incrementState">Increment</button>
-  <h1>{{ number }}</h1>
 </template>
 
 <script>
@@ -21,15 +19,9 @@ export default {
   setup() {
     const store = useStore();
 
-    const number = computed(() => {
-      return store.getters.number;
-    })
 
-    function incrementState() {
-      store.commit('increment')
-    }
 
-    return { number, incrementState }
+    return {}
   }
 }
 

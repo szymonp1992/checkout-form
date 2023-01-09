@@ -3,7 +3,6 @@
         <form class="row g-3 needs-validation checkout-form" novalidate>
             <div class="input-group ps-0">
                 <div class="form-floating">
-
                     <input type="email" id="email" class="form-control" placeholder="E-mail" v-model="email" required />
                     <div class="invalid-feedback">
                         Please provide a valid e-mail address.
@@ -72,7 +71,33 @@
                 </div>
                 <label for="country" class="ps-3">Country *</label>
             </div>
-            <span>* - required fields</span>
+            <span class="ps-0">* - required fields</span>
+            <div class="col-4 ps-0">
+                <label for="chickenWings" class="form-label">Chicken wings: <span class="orderNumberDisplay">{{
+                    chickenWingsNumber
+                }}</span></label>
+                <input type="range" class="form-range" min="0" max="10" step="1" id="chickenWings"
+                    v-model="chickenWings">
+                <p>Price: {{ chickenWingsPrice }} €</p>
+            </div>
+            <div class="col-4 ps-0">
+                <label for="chickenTenders" class="form-label">Chicken tenders: <span class="orderNumberDisplay">{{
+                    chickenTendersNumber
+                }}</span></label>
+                <input type="range" class="form-range" min="0" max="10" step="1" id="chickenTenders"
+                    v-model="chickenTenders">
+                <p>Price: {{ chickenTendersPrice }} €</p>
+            </div>
+            <div class="col-4 ps-0">
+                <label for="beefBurgers" class="form-label">French fries: <span class="orderNumberDisplay">{{
+                    frenchFriesNumber
+                }}</span></label>
+                <input type="range" class="form-range" min="0" max="10" step="1" id="frenchFries" v-model="frenchFries">
+                <p>Price: {{ frenchFriesPrice }} €</p>
+            </div>
+            <h2 class="ps-0">Total: {{ totalPrice }} €</h2>
+
+
             <button type="submit" class="btn btn-dark btn-lg col-3 ps-3">Submit</button>
         </form>
     </div>
@@ -80,7 +105,7 @@
 
 <script>
 
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
 export default {
 
@@ -96,10 +121,46 @@ export default {
         const zipCode = ref('');
         const city = ref('');
         const country = ref('');
+        const chickenWings = ref(0)
+        const chickenTenders = ref(0)
+        const frenchFries = ref(0)
+        const chickenWingsNumber = computed(() => {
+            if (chickenWings.value === 0) {
+                return '0'
+            } else {
+                return '🐥'.repeat(chickenWings.value) + ' ' + chickenWings.value
+            }
+        })
+        const chickenTendersNumber = computed(() => {
+            if (chickenTenders.value === 0) {
+                return '0'
+            } else {
+                return '🐔'.repeat(chickenTenders.value) + ' ' + chickenTenders.value
+            }
+        })
+        const frenchFriesNumber = computed(() => {
+            if (frenchFries.value === 0) {
+                return '0'
+            } else {
+                return '🍟'.repeat(frenchFries.value) + ' ' + frenchFries.value
+            }
+        })
+        const chickenWingsPrice = computed(() => {
+            return (chickenWings.value * 1.15).toFixed(2)
+        })
+        const chickenTendersPrice = computed(() => {
+            return (chickenTenders.value * 2.10).toFixed(2)
+        })
+        const frenchFriesPrice = computed(() => {
+            return (frenchFries.value * 1.25).toFixed(2)
+        })
+        const totalPrice = computed(() => {
+            return (chickenWings.value * 1.15 + chickenTenders.value * 2.10 + frenchFries.value * 1.25).toFixed(2)
+        })
 
         const entries = []
 
-        let isFormValid = false;
+
 
         onMounted(() => {
             const checkoutForm = document.querySelector('.needs-validation');
@@ -107,7 +168,6 @@ export default {
                 if (!checkoutForm.checkValidity()) {
                     event.preventDefault();
                     event.stopPropagation();
-                    isFormValid = false;
                 } else {
                     event.preventDefault();
                     entries.push({
@@ -120,16 +180,18 @@ export default {
                         zipCode,
                         city,
                         country,
+                        chickenWingsNumber,
+                        chickenTendersNumber,
+                        frenchFriesNumber,
                     });
                     console.log(entries);
-                    isFormValid = true;
                 }
 
                 checkoutForm.classList.add('was-validated')
             }, false)
         });
 
-        return { email, name, surname, street, houseNo, apartmentNo, zipCode, city, country }
+        return { email, name, surname, street, houseNo, apartmentNo, zipCode, city, country, chickenWings, chickenTenders, frenchFries, chickenWingsNumber, chickenTendersNumber, frenchFriesNumber, chickenWingsPrice, chickenTendersPrice, frenchFriesPrice, totalPrice }
     }
 }
 
@@ -138,5 +200,9 @@ export default {
 <style>
 .container {
     margin: 2rem;
+}
+
+.orderNumberDisplay {
+    font-weight: bold;
 }
 </style>
