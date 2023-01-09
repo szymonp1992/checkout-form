@@ -1,22 +1,22 @@
 <template>
     <div class="container">
         <form class="row g-3 needs-validation checkout-form" novalidate>
-            <div class="input-group ps-0">
+            <div class="input-group">
                 <div class="form-floating">
                     <input type="email" id="email" class="form-control" placeholder="E-mail" v-model="email" required />
                     <div class="invalid-feedback">
                         Please provide a valid e-mail address.
                     </div>
-                    <label for="email" class="ps-3">E-mail *</label>
+                    <label for="email">E-mail *</label>
                 </div>
             </div>
-            <div class="input-group ps-0">
+            <div class="input-group">
                 <div class="form-floating">
                     <input type="text" id="name" class="form-control" placeholder="Name" v-model="name" required />
                     <div class="invalid-feedback">
                         Please provide a valid name.
                     </div>
-                    <label for="name" class="ps-3">Name *</label>
+                    <label for="name">Name *</label>
                 </div>
                 <div class="form-floating">
                     <input type="text" id="surname" class="form-control" placeholder="Surname" v-model="surname"
@@ -24,11 +24,11 @@
                     <div class="invalid-feedback">
                         Please provide a valid surname.
                     </div>
-                    <label for="surname" class="ps-3">Surname *</label>
+                    <label for="surname">Surname *</label>
                 </div>
 
             </div>
-            <div class="form-floating col-12 col-md-6 ps-0">
+            <div class="form-floating col-12 col-md-6">
                 <input type="text" id="street" class="form-control" placeholder="Street address" v-model="street"
                     required />
                 <div class="invalid-feedback">
@@ -36,7 +36,7 @@
                 </div>
                 <label for="street" class="ps-3">Street address *</label>
             </div>
-            <div class="form-floating col-6 col-md-3 ps-0">
+            <div class="form-floating col-6 col-md-3">
                 <input type="text" id="house-number" class="form-control" placeholder="House no." v-model="houseNo"
                     required />
                 <div class="invalid-feedback">
@@ -44,12 +44,12 @@
                 </div>
                 <label for="house-number" class="ps-3">House no. *</label>
             </div>
-            <div class="form-floating col-6 col-md-3 ps-0">
+            <div class="form-floating col-6 col-md-3">
                 <input type="text" id="apartment-number" class="form-control" placeholder="Apartment no."
                     v-model="apartmentNo" />
                 <label for="apartment-number" class="ps-3">Apartment no.</label>
             </div>
-            <div class="form-floating col-4 ps-0">
+            <div class="form-floating col-4">
                 <input type="text" id="zip-code" class="form-control" placeholder="Zip code" v-model="zipCode"
                     required />
                 <div class="invalid-feedback">
@@ -57,22 +57,22 @@
                 </div>
                 <label for="zip-code" class="ps-3">Zip code *</label>
             </div>
-            <div class="form-floating col-4 ps-0">
+            <div class="form-floating col-4">
                 <input type="text" id="city" class="form-control" placeholder="City" v-model="city" required />
                 <div class="invalid-feedback">
                     Please provide city.
                 </div>
                 <label for="city" class="ps-3">City *</label>
             </div>
-            <div class="form-floating col-4 ps-0">
+            <div class="form-floating col-4">
                 <input type="text" id="country" class="form-control" placeholder="Country" v-model="country" required />
                 <div class="invalid-feedback">
                     Please provide country.
                 </div>
                 <label for="country" class="ps-3">Country *</label>
             </div>
-            <span class="ps-0">* - required fields</span>
-            <div class="col-4 ps-0">
+            <span>* - required fields</span>
+            <div class="col-4">
                 <label for="chickenWings" class="form-label">Chicken wings: <span class="orderNumberDisplay">{{
                     chickenWingsNumber
                 }}</span></label>
@@ -80,7 +80,7 @@
                     v-model="chickenWings">
                 <p>Price: {{ chickenWingsPrice }} €</p>
             </div>
-            <div class="col-4 ps-0">
+            <div class="col-4">
                 <label for="chickenTenders" class="form-label">Chicken tenders: <span class="orderNumberDisplay">{{
                     chickenTendersNumber
                 }}</span></label>
@@ -88,17 +88,15 @@
                     v-model="chickenTenders">
                 <p>Price: {{ chickenTendersPrice }} €</p>
             </div>
-            <div class="col-4 ps-0">
+            <div class="col-4">
                 <label for="beefBurgers" class="form-label">French fries: <span class="orderNumberDisplay">{{
                     frenchFriesNumber
                 }}</span></label>
                 <input type="range" class="form-range" min="0" max="10" step="1" id="frenchFries" v-model="frenchFries">
                 <p>Price: {{ frenchFriesPrice }} €</p>
             </div>
-            <h2 class="ps-0">Total: {{ totalPrice }} €</h2>
-
-
-            <button type="submit" class="btn btn-dark btn-lg col-3 ps-3">Submit</button>
+            <h2>Total: {{ totalPrice }} €</h2>
+            <button type="submit" class="btn btn-dark btn-lg col-3 ms-2">Submit</button>
         </form>
     </div>
 </template>
@@ -106,12 +104,15 @@
 <script>
 
 import { ref, computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
 
 
 
     setup() {
+        const store = useStore();
+
         const email = ref('');
         const name = ref('');
         const surname = ref('');
@@ -158,8 +159,6 @@ export default {
             return (chickenWings.value * 1.15 + chickenTenders.value * 2.10 + frenchFries.value * 1.25).toFixed(2)
         })
 
-        const entries = []
-
 
 
         onMounted(() => {
@@ -170,23 +169,23 @@ export default {
                     event.stopPropagation();
                 } else {
                     event.preventDefault();
-                    entries.push({
-                        email,
-                        name,
-                        surname,
-                        street,
-                        houseNo,
-                        apartmentNo,
-                        zipCode,
-                        city,
-                        country,
-                        chickenWingsNumber,
-                        chickenTendersNumber,
-                        frenchFriesNumber,
+                    store.dispatch('addOrderEntry', {
+                        email: email.value,
+                        name: name.value,
+                        surname: surname.value,
+                        street: street.value,
+                        houseNo: houseNo.value,
+                        apartmentNo: apartmentNo.value,
+                        zipCode: zipCode.value,
+                        city: city.value,
+                        country: country.value,
+                        chickenWings: chickenWings.value,
+                        chickenTenders: chickenTenders.value,
+                        frenchFries: frenchFries.value,
+                        totalPrice: totalPrice.value
                     });
-                    console.log(entries);
-                }
 
+                }
                 checkoutForm.classList.add('was-validated')
             }, false)
         });

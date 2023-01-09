@@ -5,7 +5,9 @@ import rootGetters from "./getters.js";
 
 const store = createStore({
   state() {
-    return {};
+    return {
+      orders: [],
+    };
   },
   mutations: rootMutations,
   actions: rootActions,

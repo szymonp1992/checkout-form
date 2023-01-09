@@ -1,28 +1,20 @@
 <template>
   <TheHeader />
   <CheckoutForm />
+  <AllOrders />
 </template>
 
 <script>
 import CheckoutForm from './components/CheckoutForm.vue'
 import TheHeader from './components/TheHeader.vue'
-
-import { computed } from 'vue'
-
-import { useStore } from 'vuex'
+import AllOrders from './components/AllOrders.vue'
 
 export default {
   components: {
     CheckoutForm,
     TheHeader,
+    AllOrders,
   },
-  setup() {
-    const store = useStore();
-
-
-
-    return {}
-  }
 }
 
 </script>
