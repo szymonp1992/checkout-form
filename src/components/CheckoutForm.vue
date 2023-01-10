@@ -95,6 +95,9 @@
                 <input type="range" class="form-range" min="0" max="10" step="1" id="frenchFries" v-model="frenchFries">
                 <p>Price: {{ frenchFriesPrice }} €</p>
             </div>
+            <p class="empty-error-order" :style="{ 'display': isOrderEmpty ? 'block' : 'none' }">
+                You need to order at least one thing from our menu to proceed with the order.
+            </p>
             <h2>Total: {{ totalPrice }} €</h2>
             <button type="submit" class="btn btn-dark btn-lg col-3 ms-2">Submit</button>
         </form>
@@ -113,6 +116,7 @@ export default {
     setup() {
         const store = useStore();
 
+
         const email = ref('');
         const name = ref('');
         const surname = ref('');
@@ -122,13 +126,14 @@ export default {
         const zipCode = ref('');
         const city = ref('');
         const country = ref('');
-        const chickenWings = ref(0)
-        const chickenTenders = ref(0)
-        const frenchFries = ref(0)
+        const chickenWings = ref(0);
+        const chickenTenders = ref(0);
+        const frenchFries = ref(0);
         const chickenWingsNumber = computed(() => {
             if (chickenWings.value === 0) {
                 return '0'
             } else {
+                isOrderEmpty.value = false;
                 return '🐥'.repeat(chickenWings.value) + ' ' + chickenWings.value
             }
         })
@@ -136,6 +141,7 @@ export default {
             if (chickenTenders.value === 0) {
                 return '0'
             } else {
+                isOrderEmpty.value = false;
                 return '🐔'.repeat(chickenTenders.value) + ' ' + chickenTenders.value
             }
         })
@@ -143,6 +149,7 @@ export default {
             if (frenchFries.value === 0) {
                 return '0'
             } else {
+                isOrderEmpty.value = false;
                 return '🍟'.repeat(frenchFries.value) + ' ' + frenchFries.value
             }
         })
@@ -159,17 +166,28 @@ export default {
             return (chickenWings.value * 1.15 + chickenTenders.value * 2.10 + frenchFries.value * 1.25).toFixed(2)
         })
 
+        const isOrderEmpty = ref(false)
 
 
         onMounted(() => {
             const checkoutForm = document.querySelector('.needs-validation');
             checkoutForm.addEventListener('submit', event => {
+
                 if (!checkoutForm.checkValidity()) {
                     event.preventDefault();
                     event.stopPropagation();
+                    checkoutForm.classList.add('was-validated')
+                    if (totalPrice.value === "0.00") {
+                        isOrderEmpty.value = true;
+                    }
                 } else {
                     event.preventDefault();
+                    if (totalPrice.value === "0.00") {
+                        isOrderEmpty.value = true;
+                        return
+                    }
                     store.dispatch('addOrderEntry', {
+                        id: store.getters.allOrders.length + 1,
                         email: email.value,
                         name: name.value,
                         surname: surname.value,
@@ -180,17 +198,29 @@ export default {
                         city: city.value,
                         country: country.value,
                         chickenWings: chickenWings.value,
-                        chickenTenders: chickenTenders.value,
+                        chickenTenders: chickenWings.value,
                         frenchFries: frenchFries.value,
                         totalPrice: totalPrice.value
                     });
-
+                    email.value
+                    name.value = ''
+                    surname.value = ''
+                    street.value = ''
+                    houseNo.value = ''
+                    apartmentNo.value = ''
+                    zipCode.value = ''
+                    city.value = ''
+                    country.value = ''
+                    chickenWings.value = 0
+                    chickenTenders.value = 0
+                    frenchFries.value = 0
+                    totalPrice.value = 0
                 }
-                checkoutForm.classList.add('was-validated')
+
             }, false)
         });
 
-        return { email, name, surname, street, houseNo, apartmentNo, zipCode, city, country, chickenWings, chickenTenders, frenchFries, chickenWingsNumber, chickenTendersNumber, frenchFriesNumber, chickenWingsPrice, chickenTendersPrice, frenchFriesPrice, totalPrice }
+        return { email, name, surname, street, houseNo, apartmentNo, zipCode, city, country, chickenWings, chickenTenders, frenchFries, chickenWingsNumber, chickenTendersNumber, frenchFriesNumber, chickenWingsPrice, chickenTendersPrice, frenchFriesPrice, totalPrice, isOrderEmpty }
     }
 }
 
@@ -203,5 +233,9 @@ export default {
 
 .orderNumberDisplay {
     font-weight: bold;
+}
+
+.empty-error-order {
+    color: red;
 }
 </style>
