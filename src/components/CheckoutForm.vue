@@ -198,11 +198,11 @@ export default {
                         city: city.value,
                         country: country.value,
                         chickenWings: chickenWings.value,
-                        chickenTenders: chickenWings.value,
+                        chickenTenders: chickenTenders.value,
                         frenchFries: frenchFries.value,
                         totalPrice: totalPrice.value
                     });
-                    email.value
+                    email.value = ''
                     name.value = ''
                     surname.value = ''
                     street.value = ''
@@ -215,6 +215,9 @@ export default {
                     chickenTenders.value = 0
                     frenchFries.value = 0
                     totalPrice.value = 0
+                    if (checkoutForm.classList.contains('was-validated')) {
+                        checkoutForm.classList.remove('was-validated')
+                    }
                 }
 
             }, false)

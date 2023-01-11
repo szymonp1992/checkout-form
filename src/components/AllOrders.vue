@@ -21,7 +21,7 @@
                         <p class="card-text">{{ order.chickenWings }} Chicken wings</p>
                         <p class="card-text">{{ order.chickenTenders }} Chicken Tenders</p>
                         <p class="card-text">{{ order.frenchFries }} French Fries</p>
-                        <h5 class="card-title">Total: {{ parseInt(order.totalPrice).toFixed(2) }}€</h5>
+                        <h5 class="card-title">Total: {{ Number(order.totalPrice).toFixed(2) }}€</h5>
                     </div>
                 </div>
             </div>
