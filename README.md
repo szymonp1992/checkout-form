@@ -1,29 +1,25 @@
-# checkout-form
+# Checkout form
 
-This template should help get you started developing with Vue 3 in Vite.
+## Table of contents
 
-## Recommended IDE Setup
+- [General info](#general-info)
+- [Technologies](#technologies)
+- [Live preview](#live-preview)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## General info
 
-## Customize configuration
+This one-page app is a checkout form for fictional online fried chicken joint "Javascript Fried Chicken". It collects orders from users and displays them below the order form. It uses simple form validation.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+Orders are being stored using Vuex. Design powered by Bootstrap.
 
-## Project Setup
+## Technologies
 
-```sh
-npm install
-```
+Project is created with:
 
-### Compile and Hot-Reload for Development
+- Vue 3.2.45
+- Vuex 4.0.2
+- Bootstrap 5.2.3
 
-```sh
-npm run dev
-```
+## Live preview
 
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+Live preview is available at https://szymonp1992.github.io/checkout-form/
